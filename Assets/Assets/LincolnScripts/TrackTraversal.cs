@@ -10,21 +10,25 @@ public class TrackTraversal : MonoBehaviour
     public Spline MySpline;
     public float currentProgress = 0;
     public float offset = 0.5f;
-
+    private Vector3 offsetV3;
     // Start is called before the first frame update
     void Start()
     {
+        offsetV3 = new Vector3(0, 0, -offset);
         MySpline = shapeController.spline;
         transform.parent = shapeController.transform;
-
+        
         Vector2 StartPos = GetPoint(MySpline, 0f);
-        transform.localPosition = new Vector3(StartPos.x, offset ,StartPos.y);
+        //transform.localPosition = new Vector3(StartPos.x, offset ,StartPos.y);
+        transform.localPosition = MySpline.GetPosition(0);
+        transform.localPosition += offsetV3;
+        // transform.localPosition = new Vector3(StartPos.x, StartPos.y, offset);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public static Vector2 GetPoint(Spline spline, float progress)
