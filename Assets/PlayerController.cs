@@ -4,23 +4,50 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-   public float speed = 5.0f;
-   public float turn;
-    // Update is called once per frame
-    void Update()
+    public float speed = 5.0f;
+    public float turnSpeed = 200.0f;
+
+    private Rigidbody rb;
+
+    // camera 
+
+    private float x;
+    private float y;
+    private Vector3 rotateValue;
+
+    void Start()
     {
         
-        if(Input.GetKey(KeyCode.W))
+        rb = GetComponent<Rigidbody>();
+        
+    }
+
+    
+    void FixedUpdate()
+    {
+        
+        if (Input.GetKey(KeyCode.W))
         {
-             transform.position += Vector3.forward * Time.deltaTime * speed;
+            rb.MovePosition(rb.position + transform.forward * Time.fixedDeltaTime * speed);
         }
-        else if(Input.GetKey(KeyCode.S))
+
+        
+        if (Input.GetKey(KeyCode.S))
         {
-            transform.position += Vector3.back * Time.deltaTime * speed;
+            rb.MovePosition(rb.position - transform.forward * Time.fixedDeltaTime * speed);
         }
-        /* else if( Input.GetKey(KeyCode.D))
-         {
-             transform.Rotate += 
-         }*/
+        if (Input.GetKey(KeyCode.D))
+        {
+
+        }
+
+        // camera 
+        y = Input.GetAxis("Mouse X");
+        x = Input.GetAxis("Mouse Y");
+        Debug.Log(x + ":" + y);
+        rotateValue = new Vector3(x, y * -1, 0);
+        transform.eulerAngles = transform.eulerAngles - rotateValue;
+
+
     }
 }
